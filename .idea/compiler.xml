@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="medecinServiceApi" />
+        <module name="cabinet-esb" />
+        <module name="consultationServiceApi" />
+        <module name="rendezvousServiceApi" />
+        <module name="patientServiceApi" />
+      </profile>
+      <profile name="Annotation profile for cabinetMedicalTp2SOA" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
+        </processorPath>
+        <module name="cabinet-repo" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="cabinet-esb" options="-parameters" />
+      <module name="cabinet-repo" options="-parameters" />
+      <module name="consultationServiceApi" options="-parameters" />
+      <module name="medecinServiceApi" options="-parameters" />
+      <module name="patientServiceApi" options="-parameters" />
+      <module name="rendezvousServiceApi" options="-parameters" />
+    </option>
+  </component>
+</project>
