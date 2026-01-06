@@ -42,7 +42,7 @@ Chaque service représente une fonctionnalité bien définie :
 * `rendezvous-service-api` : gestion des rendez-vous
 * `consultation-service-api` : gestion des consultations
 
-> ⚠️ **Les services ne communiquent jamais directement entre eux.**
+>  **Les services ne communiquent jamais directement entre eux.**
 > Toute requête externe passe obligatoirement par l’ESB, qui joue le rôle d’intermédiaire.
 
 ---
