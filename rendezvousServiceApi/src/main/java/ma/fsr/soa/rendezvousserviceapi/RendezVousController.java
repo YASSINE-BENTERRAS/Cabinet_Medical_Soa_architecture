@@ -24,8 +24,7 @@ public class RendezVousController {
 
     @GetMapping("/{id}")
     public List<RendezVous> getRendezVousByMedecin(@PathVariable Long id ){
-        return rendezVousService.getRdvByMedecin(id);
-    }
+        return rendezVousService.getRdvByMedecin(id);}
 
     @GetMapping("/byName")
     public List<RendezVous> getRendezVousByPatient(@PathVariable Long id ){

@@ -1,78 +1,91 @@
-Cabinet Medical – Architecture SOA avec ESB (Apache Camel)
-Description
 
-Ce projet est réalisé dans le cadre du TP2 – Systèmes Distribués Basés sur les Microservices (Master IPS – FSR).
-L’objectif est de transformer une application monolithique de gestion d’un cabinet médical en une architecture orientée services (SOA), avec un ESB Apache Camel comme point d’entrée unique.
+# Cabinet Médical – Architecture SOA avec ESB (Apache Camel)
 
-Chaque fonctionnalité métier est isolée dans un service indépendant, tandis que l’ESB assure le routage des requêtes externes vers les services internes.
+## Description
 
-Architecture générale
+Ce projet a été réalisé dans le cadre du **TP2 – Systèmes Distribués Basés sur les Microservices**
+*(Master IPS – FSR)*.
 
-Le projet est organisé sous forme d’un projet Maven multi-modules :
+L’objectif principal est de **refactoriser une application monolithique de gestion d’un cabinet médical** vers une **architecture orientée services (SOA)**.
+L’architecture repose sur un **ESB Apache Camel**, utilisé comme **point d’entrée unique** pour toutes les requêtes externes.
 
-cabinet-esb
-ESB Apache Camel
+Chaque fonctionnalité métier est exposée sous forme d’un service indépendant, tandis que l’ESB se charge du **routage**, de la **centralisation des accès** et de la **découplage entre les services**.
 
-Point d’entrée unique pour les clients
+---
 
-Expose les APIs publiques /api/**
+## Architecture générale
 
-Redirige les requêtes vers les services internes
+Le projet est structuré sous forme d’un **projet Maven multi-modules**, composé des éléments suivants :
 
-cabinet-repo
-Module de données partagées
+### 1. `cabinet-esb`
 
-Entités JPA
+* ESB basé sur **Apache Camel**
+* Point d’entrée unique pour les clients externes
+* Expose les APIs publiques sous `/api/**`
+* Redirige les requêtes vers les services métiers appropriés
 
-Repositories Spring Data JPA
+### 2. `cabinet-repo`
 
-Aucune logique métier
+* Module de données partagées
+* Contient :
 
-patient-service-api
-Gestion des patients
+    * Les entités JPA
+    * Les repositories Spring Data JPA
+* Ne contient **aucune logique métier**
 
-medecin-service-api
-Gestion des médecins
+### 3. Services métiers
 
-rendezvous-service-api
-Gestion des rendez-vous
+Chaque service représente une fonctionnalité bien définie :
 
-consultation-service-api
-Gestion des consultations
+* `patient-service-api` : gestion des patients
+* `medecin-service-api` : gestion des médecins
+* `rendezvous-service-api` : gestion des rendez-vous
+* `consultation-service-api` : gestion des consultations
 
-👉 Les services ne communiquent jamais directement entre eux.
-Toute requête externe passe obligatoirement par l’ESB.
+> ⚠️ **Les services ne communiquent jamais directement entre eux.**
+> Toute requête externe passe obligatoirement par l’ESB, qui joue le rôle d’intermédiaire.
 
-Technologies utilisées
+---
 
-Java 21
+## Technologies utilisées
 
-Spring Boot
+* Java 21
+* Spring Boot
+* Spring Data JPA
+* Apache Camel
+* Maven (multi-modules)
+* Base de données H2 (en mémoire)
 
-Spring Data JPA
+---
 
-Apache Camel
+## Ports utilisés
 
-Maven (multi-modules)
+| Module               | Port |
+| -------------------- | ---- |
+| ESB (`cabinet-esb`)  | 8080 |
+| Patient Service      | 8082 |
+| Médecin Service      | 8083 |
+| Rendez-vous Service  | 8084 |
+| Consultation Service | 8085 |
 
-Base de données H2 (en mémoire)
+---
 
-Ports utilisés
-Module	Port
-ESB (cabinet-esb)	8080
-Patient Service	8082
-Médecin Service	8083
-Rendez-vous Service	8084
-Consultation Service	8085
-Accès aux APIs
-Exemple – Patients
+## Accès aux APIs
 
-GET /api/patients → Liste des patients
+Toutes les requêtes passent par l’ESB via le port **8080**.
 
-GET /api/patients/{id} → Patient par id
+### Exemple – Gestion des patients
 
-POST /api/patients → Ajouter un patient
+* `GET /api/patients` → Récupérer la liste des patients
+* `GET /api/patients/{id}` → Récupérer un patient par son identifiant
+* `POST /api/patients` → Ajouter un nouveau patient
+* `PUT /api/patients/{id}` → Modifier un patient existant
+* `DELETE /api/patients/{id}` → Supprimer un patient
 
-PUT /api/patients/{id} → Modifier un patient
+---
 
-DELETE /api/patients/{id} → Supprimer un patient
+Si tu veux, je peux aussi te fournir :
+
+* une **version encore plus académique**
+* une **version plus courte**
+* ou un README avec une section **Lancement du projet & tests Postman**
