@@ -1,50 +1,78 @@
-# TP2 – Architecture Orientée Services (SOA)  
-## Gestion d’un Cabinet Médical
+Cabinet Medical – Architecture SOA avec ESB (Apache Camel)
+Description
 
-Cours assuré par : **Jaouad OUHSSAINE**  
-Contact : jaouad.ouhs@gmail.com | jaouad_ouhssaine@um5.ac.ma
+Ce projet est réalisé dans le cadre du TP2 – Systèmes Distribués Basés sur les Microservices (Master IPS – FSR).
+L’objectif est de transformer une application monolithique de gestion d’un cabinet médical en une architecture orientée services (SOA), avec un ESB Apache Camel comme point d’entrée unique.
 
----
+Chaque fonctionnalité métier est isolée dans un service indépendant, tandis que l’ESB assure le routage des requêtes externes vers les services internes.
 
-## Contexte
+Architecture générale
 
-Ce TP correspond à la **deuxième phase** du projet pédagogique évolutif  
-**Gestion d’un Cabinet Médical**.
+Le projet est organisé sous forme d’un projet Maven multi-modules :
 
-Il consiste à **transformer l’application monolithique du TP1** en une  
-**architecture orientée services (SOA)** basée sur des services métiers indépendants
-et un **ESB Apache Camel**.
+cabinet-esb
+ESB Apache Camel
 
----
+Point d’entrée unique pour les clients
 
-## Objectifs du TP
+Expose les APIs publiques /api/**
 
-- Mettre en place une architecture SOA
-- Séparer les responsabilités métiers par service
-- Centraliser l’exposition des APIs via un ESB
-- Réutiliser un module commun pour la persistance
-- Comprendre les principes de découplage et de gouvernance des services
+Redirige les requêtes vers les services internes
 
----
+cabinet-repo
+Module de données partagées
 
-## Architecture globale
+Entités JPA
 
-L’architecture est basée sur :
-- Des services métiers indépendants
-- Un module commun de données
-- Un ESB servant de point d’entrée unique
+Repositories Spring Data JPA
 
----
+Aucune logique métier
 
-## Structure du projet
+patient-service-api
+Gestion des patients
 
-```text
-cabinetMedicalTp2SOA/
-│
-├── cabinet-repo                 # Entités JPA + Repositories
-├── patient-service-api          # Service Patient
-├── medecin-service-api          # Service Médecin
-├── rendezvous-service-api       # Service Rendez-vous
-├── consultation-service-api     # Service Consultation
-├── cabinet-esb                  # ESB Apache Camel
-└── pom.xml                      # Projet parent (packaging pom)
+medecin-service-api
+Gestion des médecins
+
+rendezvous-service-api
+Gestion des rendez-vous
+
+consultation-service-api
+Gestion des consultations
+
+👉 Les services ne communiquent jamais directement entre eux.
+Toute requête externe passe obligatoirement par l’ESB.
+
+Technologies utilisées
+
+Java 21
+
+Spring Boot
+
+Spring Data JPA
+
+Apache Camel
+
+Maven (multi-modules)
+
+Base de données H2 (en mémoire)
+
+Ports utilisés
+Module	Port
+ESB (cabinet-esb)	8080
+Patient Service	8082
+Médecin Service	8083
+Rendez-vous Service	8084
+Consultation Service	8085
+Accès aux APIs
+Exemple – Patients
+
+GET /api/patients → Liste des patients
+
+GET /api/patients/{id} → Patient par id
+
+POST /api/patients → Ajouter un patient
+
+PUT /api/patients/{id} → Modifier un patient
+
+DELETE /api/patients/{id} → Supprimer un patient
