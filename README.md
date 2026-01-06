@@ -84,8 +84,3 @@ Toutes les requêtes passent par l’ESB via le port **8080**.
 
 ---
 
-Si tu veux, je peux aussi te fournir :
-
-* une **version encore plus académique**
-* une **version plus courte**
-* ou un README avec une section **Lancement du projet & tests Postman**
