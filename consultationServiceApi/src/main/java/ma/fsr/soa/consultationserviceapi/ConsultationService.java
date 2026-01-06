@@ -31,6 +31,13 @@ public class ConsultationService {
         Patient patient = patientRepo.findById(requestDto.patientId()).orElseThrow(null);
         Medecin medecin = medecinRepo.findById(requestDto.medecinId()).orElseThrow(null);
         RendezVous rendezVous = rendezVousRepo.findRendezVousByPatientAndMedecin(patient,medecin) ;
+        if (requestDto.dateConsultation()==null)
+            throw new IllegalArgumentException("La date de consultation est obligatoire.");
+        if (requestDto.dateConsultation().isBefore(rendezVous.getDateRdv()))
+            throw new IllegalArgumentException(
+                    "La date de consultation doit être ≥ à la date du rendez-vous.");
+        if (requestDto.report().length()< 10)
+            throw new  IllegalArgumentException("Rapport de consultation insuffisant. ") ;
 
         return consultationRepo.save(new Consultation(
                 requestDto.dateConsultation(),

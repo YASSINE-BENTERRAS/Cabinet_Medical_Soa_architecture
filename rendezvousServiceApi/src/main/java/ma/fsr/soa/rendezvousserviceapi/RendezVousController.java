@@ -9,12 +9,17 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rendezVous")
+@RequestMapping("/internal/api/v1/rendezvous")
 
 public class RendezVousController {
     RendezVousService  rendezVousService ;
     RendezVousController(RendezVousService rendezVousService){
         this.rendezVousService = rendezVousService;
+    }
+
+    @GetMapping
+    public List<RendezVous> getAllR(){
+        return rendezVousService.getAll();
     }
 
     @GetMapping("/{id}")
@@ -37,16 +42,14 @@ public class RendezVousController {
         return rendezVousService.getRdvByStatu(statu);
     }
 
-    @PostMapping
-    public RendezVous createRendezVous(@RequestBody RendezVous rdv ){
+    @PostMapping("/rendezvous")
+    public RendezVous createRendezVous(@RequestBody RendezVousDTO rdvDto) {
         return rendezVousService.addRendezVous(
-                rdv.getPatient().getId(),
-                rdv.getMedecin().getId(),
-                rdv.getDateRdv(),
-                rdv.getStatu()) ;
+                rdvDto.getPatientId(),
+                rdvDto.getMedecinId(),
+                rdvDto.getDateRdv(),
+                rdvDto.getStatu()
+        );
     }
-
-
-
 
 }

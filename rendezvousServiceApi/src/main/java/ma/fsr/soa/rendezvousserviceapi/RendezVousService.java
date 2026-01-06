@@ -30,9 +30,11 @@ public class RendezVousService {
 
     public RendezVous addRendezVous(Long patientId , Long medecinId, LocalDate deteRdv , Statu statu){
         Patient patient = patientRepo.findById(patientId).orElseThrow(
-                ()-> new EntityNotFoundException("Patient not found")) ;
+                ()-> new EntityNotFoundException("Patient introuvable")) ;
         Medecin medecin = medecinRepo.findById(medecinId).orElseThrow(
-                ()-> new EntityNotFoundException("Medecin not found")) ;
+                ()-> new EntityNotFoundException("Medecin introuvable")) ;
+        if (deteRdv.isBefore(LocalDate.now()))
+            throw new EntityNotFoundException("La date du rendez-vous doit être future.");
 
         RendezVous rdv = new RendezVous();
         rdv.setPatient(patient);
@@ -42,6 +44,11 @@ public class RendezVousService {
 
         return rendezVousRepo.save(rdv);
 
+    }
+
+    public List<RendezVous> getAll(){
+
+        return rendezVousRepo.findAll();
     }
 
     public List<RendezVous> getRdvByPatient(Long patientId){
@@ -68,8 +75,6 @@ public class RendezVousService {
     public List<RendezVous> getRdvByStatu(Statu statu){
         return rendezVousRepo.findRendezVousByStatu(statu) ;
     }
-
-
 
     }
 

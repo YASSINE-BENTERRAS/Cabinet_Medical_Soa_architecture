@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/consultations")
+@RequestMapping("/internal/api/v1/consultations")
 public class ConsultationController {
     private final ConsultationService consultationService;
     public ConsultationController(ConsultationService consultationService) {
@@ -28,4 +28,5 @@ public class ConsultationController {
     public Consultation getConsultationById(@PathVariable Long id){
         return consultationService.searchById(id);
     }
+
 }

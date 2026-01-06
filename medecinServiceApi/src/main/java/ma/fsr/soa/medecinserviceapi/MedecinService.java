@@ -16,16 +16,25 @@ public class MedecinService {
         this.medecinRepo = medecinRepo;
     }
 
+    List<Medecin> getAll(){
+        return medecinRepo.findAll();
+    }
+
     public Medecin getMedecinById(Long id) {
         return medecinRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("Medecin avec id " + id + " n'existe pas"));
     }
-
 
     public List<Medecin> getMedecinsByNom(String nom) {
         return medecinRepo.findByNom(nom);
     }
 
     public Medecin addMedecin(Medecin medecin){
+        if (medecin.getNom()==null ||  medecin.getNom().isBlank())
+            throw new IllegalArgumentException("Le nom du médecin est obligatoire. ");
+        if (!medecin.getEmail().contains("@"))
+            throw new IllegalArgumentException("Email du médecin invalide.  ");
+        if (medecin.getSpecialite()==null || medecin.getSpecialite().isBlank())
+            throw new IllegalArgumentException("La spécialité du médecin est obligatoire");
         return medecinRepo.save(medecin);
     }
 

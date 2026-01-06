@@ -72,12 +72,12 @@ public class PatientServiceApiApplication {
                     "ilyas@gmail.com"
             ) ;
 
-            RendezVous rendezVousX = new RendezVous( LocalDate.of(2025,12,18),
+            RendezVous rendezVousX = new RendezVous( LocalDate.of(2026,12,18),
                     Statu.PLANIFIE,
                     patient3,
                     medecin1) ;
 
-            Consultation consultation1 = new Consultation(LocalDate.of(2025,12,31),
+            Consultation consultation1 = new Consultation(LocalDate.of(2026,12,31),
                     "Consultation cardiologique de suivi. État clinique stable, pas de signes alarmants. Traitement maintenu et suivi recommandé.",
                     rendezVousX
             );
@@ -106,21 +106,21 @@ public class PatientServiceApiApplication {
                         "reda@gmail.com"
                 ));
 
-                rendezVousRepo.save(new RendezVous( LocalDate.of(2025,12,18),
+                rendezVousRepo.save(new RendezVous( LocalDate.of(2026,4,18),
                         Statu.PLANIFIE,
                         patient1,
                         medecin1)) ;
-                rendezVousRepo.save(new RendezVous( LocalDate.of(2025,12,18),
+                rendezVousRepo.save(new RendezVous( LocalDate.of(2026,5,18),
                         Statu.PLANIFIE,
                         patient2,
                         medecin1)) ;
 
-                rendezVousRepo.save(new RendezVous( LocalDate.of(2025,12,18),
+                rendezVousRepo.save(new RendezVous( LocalDate.of(2026,6,18),
                         Statu.PLANIFIE,
                         patient3,
                         medecin2)) ;
 
-                rendezVousRepo.save(new RendezVous( LocalDate.of(2025,12,18),
+                rendezVousRepo.save(new RendezVous( LocalDate.of(2026,12,18),
                         Statu.PLANIFIE,
                         patient4,
                         medecin2)) ;

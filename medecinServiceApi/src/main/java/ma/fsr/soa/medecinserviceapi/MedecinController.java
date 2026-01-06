@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/medecins")
+@RequestMapping("/internal/api/v1/medecins")
 
 public class MedecinController {
     MedecinService medecinService ;
@@ -15,13 +15,17 @@ public class MedecinController {
         this.medecinService = medecinService;
     }
 
+    @GetMapping
+    public List<Medecin> getAll(){
+        return medecinService.getAll();
+    }
     @GetMapping("/{id}")
     public Medecin getMedecinById(@PathVariable Long id) {
         return medecinService.getMedecinById(id);
 
     }
 
-    @GetMapping
+    @GetMapping("/byName")
     public List<Medecin> getByName(@RequestParam String nom) {
         return medecinService.getMedecinsByNom(nom);
     }

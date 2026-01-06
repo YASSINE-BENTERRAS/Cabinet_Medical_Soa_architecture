@@ -5,6 +5,7 @@ import ma.fsr.soa.cabinetrepo.model.Patient;
 import ma.fsr.soa.cabinetrepo.repository.PatientRepo;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -14,25 +15,31 @@ public class PatientService {
         this.patientRepo = patientRepo;
     }
 
+    public List<Patient> getAllPatients(){
+        return patientRepo.findAll();
+    }
+
     public Patient getPatientById(Long id){
-        return patientRepo.findById(id).orElseThrow(()-> new IllegalArgumentException("Patient n'existe pas"));
+        return patientRepo.findById(id).orElseThrow(()-> new IllegalArgumentException("Patient introuvable : id ="+id));
     }
 
     public List<Patient> searchPatientByNom(String nom){
         return patientRepo.findByName(nom);
     }
 
-    //Création d'un Patient
+
     public Patient createPatient(Patient patient) throws Exception {
         if (patient.getName()==null || patient.getName().isBlank()) {
             throw new IllegalAccessException("Nom obligatoire") ;
         }
         if (patient.getGenre()==null) {
-            throw new IllegalAccessException("Genre obligatoire") ;
+            throw new IllegalArgumentException("Genre obligatoire") ;
         }
         if (patient.getDateNaissance()==null) {
-            throw new IllegalAccessException("la date de naissance est obligatoire") ;
+            throw new IllegalArgumentException("la date de naissance est obligatoire") ;
         }
+        if (patient.getDateNaissance().isAfter(LocalDate.now()))
+            throw new IllegalArgumentException("La date de naissance ne peut pas être future ") ;
         return patientRepo.save(patient);
     }
 
